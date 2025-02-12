@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build_windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: goto-bus-stop/setup-zig@v2
+      - uses: seanmiddleditch/gha-setup-ninja@master
+      - name: build
+        shell: bash
+        run: |
+          git clone https://github.com/MoAlyousef/cfltk --depth=1 --recurse-submodules
+          cd cfltk && ./scripts/bootstrap_common.sh
